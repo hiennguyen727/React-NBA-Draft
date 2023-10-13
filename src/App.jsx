@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom'; // Import useNavigate
-import Homepage from './components/homepage';
+import Homepage from './components/Homepage';
 import Draftpage from './components/Draftpage';
 import Teams from './components/Teams';
 import Nuggets from './components/TeamsWest/Nuggets';

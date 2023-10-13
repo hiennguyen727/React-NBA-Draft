@@ -8,14 +8,14 @@ function BasicExample() {
   return (
     <Navbar expand="lg"  id='NARBARBRO' >
       <Container>
-        <Navbar.Brand className='navbarwords' href="#home">HBA</Navbar.Brand>
+        <Navbar.Brand className='navbarwords' href="/">NBA</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navlinks">
             <Nav.Link className="navlinks" href="/">Home</Nav.Link>
             <Nav.Link className="navlinks" href="/draftpage">DRAFT PAGE</Nav.Link>
             <Nav.Link className="navlinks" href="/teams">TEAMS</Nav.Link>
-            <Nav.Link className="navlinks" href="/aboutme">ABOUT ME</Nav.Link>
+            {/* <Nav.Link className="navlinks" href="/aboutme">ABOUT ME</Nav.Link> */}
             
           </Nav>
         </Navbar.Collapse>

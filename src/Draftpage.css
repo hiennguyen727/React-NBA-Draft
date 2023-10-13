@@ -5,9 +5,10 @@ body {
     background-color: #ffffff;
     color: rgb(14, 14, 14);
     padding: 20px;
-    /* background-image: url('https://media0.giphy.com/media/VGhhoIgysgMiAHcA88/giphy.gif'); */
+    background-image: url('https://media4.giphy.com/media/2seaKlqqoGglLcPH2Q/giphy.gif');
     background-size: cover;
     background-repeat: no-repeat;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   .nbalogo{
     width: 50px;
@@ -98,5 +99,8 @@ body {
 
   #articleheader{
     color: black;
+    margin: 0;
+    text-decoration: none;
   }
+  
   

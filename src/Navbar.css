@@ -16,7 +16,10 @@
     justify-content: center;
 }
 
-#hollup{
-    background: pink;
+#hollup {
+    background-image: url('./basketballfire.jpg'); /* Assuming 'arena' is the image file */
     border: 2px solid black;
+    color: white;
+margin: 0px;
+padding: 0px;
 }

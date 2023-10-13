@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import "../Draftpage.css"; // Import custom CSS for styling
 import Navbar from "./Navbar.jsx";
 import { useTime, DateTimeProvider } from "./DateTimeContext"; // Import the time context and DateTimeProvider
-
+import Footer from './Footer.jsx'
 function Draftpage() {
   const [NbaSearch, setNbaSearch] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,6 +17,7 @@ function Draftpage() {
   const [myTeam2, setMyTeam2] = useState(new Array(10).fill(null));
   const [isMockDrafting, setIsMockDrafting] = useState(false);
   const [timer, setTimer] = useState(90);
+  const [currentTurn, setCurrentTurn] = useState("Team1"); // Add current turn state
   const { time } = useTime(); // Access the time from the context
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function Draftpage() {
         } else {
           setIsMockDrafting(false);
           clearInterval(countdownInterval);
+          // Switch turns at the end of the timer
+          setCurrentTurn(currentTurn === "Team1" ? "Team2" : "Team1");
         }
       }, 1000);
     }
@@ -35,7 +38,7 @@ function Draftpage() {
     return () => {
       clearInterval(countdownInterval);
     };
-  }, [isMockDrafting, timer]);
+  }, [isMockDrafting, timer, currentTurn]);
 
   const getPlayers = async (searchTerm) => {
     try {
@@ -85,21 +88,23 @@ function Draftpage() {
   };
 
   const addToMyTeam = async (player) => {
-    if (myTeam1.length <= 10 && myTeam1.every((p) => p !== player)) {
+    if (currentTurn === "Team1" && myTeam1.length <= 10) {
       const updatedTeam1 = [...myTeam1];
       const emptySlotIndex = updatedTeam1.findIndex((p) => p === null);
       if (emptySlotIndex !== -1) {
         updatedTeam1[emptySlotIndex] = player;
         setMyTeam1(updatedTeam1);
         await getPlayerStats(player.id);
+        setCurrentTurn("Team2"); // Switch to Team2's turn
       }
-    } else if (myTeam2.length <= 10 && myTeam2.every((p) => p !== player)) {
+    } else if (currentTurn === "Team2" && myTeam2.length <= 10) {
       const updatedTeam2 = [...myTeam2];
       const emptySlotIndex = updatedTeam2.findIndex((p) => p === null);
       if (emptySlotIndex !== -1) {
         updatedTeam2[emptySlotIndex] = player;
         setMyTeam2(updatedTeam2);
         await getPlayerStats(player.id);
+        setCurrentTurn("Team1"); // Switch to Team1's turn
       }
     }
   };
@@ -114,11 +119,20 @@ function Draftpage() {
   };
 
   return (
-    <div className="dark-bg draftPage">
+    <div  style={{
+      backgroundColor: "url('dwade.jpg')",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      color: "white", // Set text color to white
+    }} className="dark-bg draftPage">
       <Navbar />
       <Container className="mt-4">
-        <h1 id="searchyourplayers"> 🏀 DRAFT PAGE 🏀</h1>
-        <div className="mb-4" id="hollup">
+        <h1 id="searchyourplayers" style={{margin:"0px",color:"black"}} > 🏀 DRAFT PAGE 🏀</h1>
+        <p style={{color:"black"}} >Current Time: {time}</p>
+
+        
+        <div className="mb-4"  style={{backgroundColor:"#D3D3D3"}} >
           <input
             className="input123"
             type="text"
@@ -126,7 +140,7 @@ function Draftpage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <p>Current Time: {time}</p> {/* Display the current time from the context */}
+         
           <Button
             variant="orange" // Custom CSS class for NBA color
             onClick={handleSearch}
@@ -161,7 +175,7 @@ function Draftpage() {
         </div>
         <Row>
           <Col md={6}>
-            <div className="results">
+            <div   className="results">
               {NbaSearch.map((player) => (
                 <Card key={player.id} className="mb-3">
                   <Card.Body>
@@ -170,7 +184,7 @@ function Draftpage() {
                         {player.first_name} {player.last_name}
                       </h5>
                     </div>
-                    <div className="nbacardname">
+                    <div   className="nbacardname">
                       <p>Team: {player.team.full_name}</p>
                     </div>
                     <Button
@@ -195,8 +209,8 @@ function Draftpage() {
           <Col md={6}>
             <Row>
               <Col>
-                <div className="my-team">
-                  <h2 style={{color:"black"}}>Team 1</h2>
+                <div style={{backgroundColor:"#D3D3D3"}} className="my-team">
+                  <h2 style={{ color: "black" }}>Team 1</h2>
                   {myTeam1.map((player, index) => (
                     <Card key={index} className="mb-3">
                       <Card.Body>
@@ -218,8 +232,8 @@ function Draftpage() {
                 </div>
               </Col>
               <Col>
-                <div className="my-team">
-                  <h2 style={{color:"black"}}>Team 2</h2>
+                <div style={{backgroundColor:"#D3D3D3"}} className="my-team">
+                  <h2 style={{ color: "black" }}>Team 2</h2>
                   {myTeam2.map((player, index) => (
                     <Card key={index} className="mb-3">
                       <Card.Body>
@@ -242,6 +256,7 @@ function Draftpage() {
           </Col>
         </Row>
       </Container>
+      <Footer/>
     </div>
   );
 }

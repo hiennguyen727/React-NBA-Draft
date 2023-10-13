@@ -25,7 +25,12 @@ const NBATeamsList = () => {
   return (
     <>
       <Navbar />
-      <div className="teams-container">
+      <div style={{
+      backgroundImage: "url('smokywhite.jpg')",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      color: "black"}}  className="teams-container">
         <div className="west-teams">
           <h2>Western Conference (West)</h2>
           <ul>

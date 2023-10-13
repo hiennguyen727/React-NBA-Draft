@@ -61,9 +61,9 @@ class NBAGamesBar extends Component {
             onChange={(e) => this.handleDateChange(e)}
           />
         </div>
-        <div className="games-bar">
+        <div className="games-bar" style={{borderRadius: "20px"}}>
           {games.map((game, index) => (
-            <div key={game.id} className="game-card">
+            <div key={game.id} className="game-card"style={{borderRadius: "20px"}}>
               <p style={{fontStyle:"bold"}} >Date: {this.formatDate(game.date)}</p>
              
               <p>

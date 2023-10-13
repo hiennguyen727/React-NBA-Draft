@@ -31,7 +31,7 @@ import Pacers from './components/TeamsEast/Pacers';
 import Nets from './components/TeamsEast/Nets';
 import Magic from './components/TeamsEast/Magic';
 import Knicks from './components/TeamsEast/Knicks';
-import Aboutus from './components/Aboutus'
+
 import Hornets from './components/TeamsEast/Hornets'
 import { DateTimeProvider } from './components/DateTimeContext';
 
@@ -47,7 +47,7 @@ function App() {
       <Route path="*" element={<Homepage />} />
       <Route path="/draftpage" element={<Draftpage />} />
       <Route path="/teams" element={<Teams />} />
-      <Route path="/aboutme" element={<Aboutus />} />
+      
 
       {/* WEST TEAMS  */}
       <Route path="/teams/Mavericks" element={<Mavericks />} /> 

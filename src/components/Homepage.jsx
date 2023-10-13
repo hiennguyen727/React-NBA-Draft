@@ -3,14 +3,14 @@ import Navbar from "./Navbar";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 import Schedule from "./Schedule";
-import { useTime } from "./DateTimeContext"; // Import the time context
+import { useTime } from "./DateTimeContext"; 
 import Footer from './Footer.jsx';
 
 const Homepage = () => {
   const [articles, setArticles] = useState([]);
-  const { time } = useTime(); // Access the time from the context
+  const { time } = useTime(); 
 
-  // Your API URL and options
+ 
   const url = "https://nba-latest-news.p.rapidapi.com/articles";
   const options = {
     method: "GET",
@@ -52,8 +52,9 @@ const Homepage = () => {
           <div className="col-md-8">
             <div className="articles-container" style={{ width: "100%", textAlign: "center" }}>
               <div className="carousel-title-bar">
-                <h2 id="articleheader">NBA Latest News Articles</h2>
+                
               </div>
+              <h2 id="articleheader">NBA Latest News Articles</h2>
               <Carousel style={{ background: "linear-gradient(to bottom, red, white)", padding: "20px",borderRadius: "50px" }}>
                 {limitedArticles.map((article, index) => (
                   <Carousel.Item key={index}>

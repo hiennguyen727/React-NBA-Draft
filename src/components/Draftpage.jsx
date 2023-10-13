@@ -5,9 +5,9 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import "../Draftpage.css"; // Import custom CSS for styling
+import "../Draftpage.css"; 
 import Navbar from "./Navbar.jsx";
-import { useTime, DateTimeProvider } from "./DateTimeContext"; // Import the time context and DateTimeProvider
+import { useTime, DateTimeProvider } from "./DateTimeContext"; 
 import Footer from './Footer.jsx'
 function Draftpage() {
   const [NbaSearch, setNbaSearch] = useState([]);
@@ -17,8 +17,8 @@ function Draftpage() {
   const [myTeam2, setMyTeam2] = useState(new Array(10).fill(null));
   const [isMockDrafting, setIsMockDrafting] = useState(false);
   const [timer, setTimer] = useState(90);
-  const [currentTurn, setCurrentTurn] = useState("Team1"); // Add current turn state
-  const { time } = useTime(); // Access the time from the context
+  const [currentTurn, setCurrentTurn] = useState("Team1"); 
+  const { time } = useTime(); 
 
   useEffect(() => {
     let countdownInterval;
@@ -29,7 +29,7 @@ function Draftpage() {
         } else {
           setIsMockDrafting(false);
           clearInterval(countdownInterval);
-          // Switch turns at the end of the timer
+          
           setCurrentTurn(currentTurn === "Team1" ? "Team2" : "Team1");
         }
       }, 1000);
@@ -95,7 +95,7 @@ function Draftpage() {
         updatedTeam1[emptySlotIndex] = player;
         setMyTeam1(updatedTeam1);
         await getPlayerStats(player.id);
-        setCurrentTurn("Team2"); // Switch to Team2's turn
+        setCurrentTurn("Team2"); 
       }
     } else if (currentTurn === "Team2" && myTeam2.length <= 10) {
       const updatedTeam2 = [...myTeam2];
@@ -104,7 +104,7 @@ function Draftpage() {
         updatedTeam2[emptySlotIndex] = player;
         setMyTeam2(updatedTeam2);
         await getPlayerStats(player.id);
-        setCurrentTurn("Team1"); // Switch to Team1's turn
+        setCurrentTurn("Team1"); 
       }
     }
   };
@@ -124,7 +124,7 @@ function Draftpage() {
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundAttachment: "fixed",
-      color: "white", // Set text color to white
+      color: "white", 
     }} className="dark-bg draftPage">
       <Navbar />
       <Container className="mt-4">
@@ -142,7 +142,7 @@ function Draftpage() {
           />
          
           <Button
-            variant="orange" // Custom CSS class for NBA color
+            variant="orange" 
             onClick={handleSearch}
             className="ml-2 btn-orange"
           >
@@ -188,7 +188,7 @@ function Draftpage() {
                       <p>Team: {player.team.full_name}</p>
                     </div>
                     <Button
-                      variant="orange" // Custom CSS class for NBA color
+                      variant="orange" 
                       onClick={() => addToMyTeam(player)}
                       className="btn-add-to-team"
                     >
@@ -198,7 +198,7 @@ function Draftpage() {
                     {playerStats && playerStats.player_id === player.id && (
                       <div>
                         <h4>Player Stats</h4>
-                        {/* Display stats chart using PlayerStatsChart */}
+                       
                       </div>
                     )}
                   </Card.Body>

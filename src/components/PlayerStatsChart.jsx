@@ -22,7 +22,7 @@ function PlayerStatsChart({ playerStats }) {
       y: statsData,
       type: 'bar',
       marker: { color: ['blue', 'green', 'red', 'purple', 'orange', 'pink'] },
-      text: statsData.map((value) => value.toFixed(2)), // Add values as text under the bars
+      text: statsData.map((value) => value.toFixed(2)), 
       textposition: 'bottom center',
     },
   ];
@@ -30,13 +30,13 @@ function PlayerStatsChart({ playerStats }) {
   const layout = {
     title: 'Player Stats',
     xaxis: { title: 'Stats' },
-    yaxis: { title: 'Value', range: [0, 40] }, // Set the y-axis range from 0 to 40
-    plot_bgcolor: 'transparent', // Set the chart background color to transparent
-    paper_bgcolor: '#EEEEEE', // Set the chart body background color to black
+    yaxis: { title: 'Value', range: [0, 40] }, 
+    plot_bgcolor: 'transparent', 
+    paper_bgcolor: '#EEEEEE', 
   };
 
   const config = {
-    displayModeBar: false, // Hide the navigation bar
+    displayModeBar: false, 
   };
 
   return <Plot data={data} layout={layout} config={config} />;

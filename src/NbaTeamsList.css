@@ -1,0 +1,53 @@
+/* NBATeamsList.css */
+
+/* Container for West and East teams */
+.teams-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+  
+  /* Styles for West teams */
+  .west-teams {
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+  }
+  
+  /* Styles for East teams */
+  .east-teams {
+    flex: 1;
+    margin-left: 10px;
+    text-align: center;
+  }
+  
+  /* Common styles for team lists */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Style the list items */
+  li {
+    margin: 10px 0;
+  }
+  
+  /* Style the headers for each conference */
+  h2 {
+    font-size: 24px;
+    margin: 20px 0;
+    text-decoration: underline;
+    color: #333;
+  }
+  
+  /* General styles for the page */
+  h1 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  

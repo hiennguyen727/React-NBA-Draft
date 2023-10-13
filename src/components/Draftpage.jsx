@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import '../App.css';
-import PlayerStatsChart from './PlayerStatsChart.jsx'; 
+import React, { useState, useEffect } from "react";
+import PlayerStatsChart from "./PlayerStatsChart.jsx";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "../Draftpage.css"; // Import custom CSS for styling
+import Navbar from "./Navbar.jsx";
+import { useTime, DateTimeProvider } from "./DateTimeContext"; // Import the time context and DateTimeProvider
 
 function Draftpage() {
   const [NbaSearch, setNbaSearch] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [playerStats, setPlayerStats] = useState(null);
-  const [myTeam1, setMyTeam1] = useState([]);
-  const [myTeam2, setMyTeam2] = useState([]);
+  const [myTeam1, setMyTeam1] = useState(new Array(10).fill(null));
+  const [myTeam2, setMyTeam2] = useState(new Array(10).fill(null));
   const [isMockDrafting, setIsMockDrafting] = useState(false);
   const [timer, setTimer] = useState(90);
+  const { time } = useTime(); // Access the time from the context
 
   useEffect(() => {
     let countdownInterval;
-
     if (isMockDrafting) {
       countdownInterval = setInterval(() => {
         if (timer > 0) {
@@ -47,10 +54,10 @@ function Draftpage() {
           getPlayerStats(data.data[0].id);
         }
       } else {
-        console.error('Failed to fetch data');
+        console.error("Failed to fetch data");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -64,27 +71,37 @@ function Draftpage() {
         console.log(data);
         setPlayerStats(data.data[0]);
       } else {
-        console.error('Failed to fetch player stats');
+        console.error("Failed to fetch player stats");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const handleSearch = () => {
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== "") {
       getPlayers(searchTerm);
     }
   };
 
   const addToMyTeam = async (player) => {
-    if (myTeam1.length <= myTeam2.length) {
-      setMyTeam1([...myTeam1, player]);
-    } else {
-      setMyTeam2([...myTeam2, player]);
+    if (myTeam1.length <= 10 && myTeam1.every((p) => p !== player)) {
+      const updatedTeam1 = [...myTeam1];
+      const emptySlotIndex = updatedTeam1.findIndex((p) => p === null);
+      if (emptySlotIndex !== -1) {
+        updatedTeam1[emptySlotIndex] = player;
+        setMyTeam1(updatedTeam1);
+        await getPlayerStats(player.id);
+      }
+    } else if (myTeam2.length <= 10 && myTeam2.every((p) => p !== player)) {
+      const updatedTeam2 = [...myTeam2];
+      const emptySlotIndex = updatedTeam2.findIndex((p) => p === null);
+      if (emptySlotIndex !== -1) {
+        updatedTeam2[emptySlotIndex] = player;
+        setMyTeam2(updatedTeam2);
+        await getPlayerStats(player.id);
+      }
     }
-
-    await getPlayerStats(player.id);
   };
 
   const startMockDraft = () => {
@@ -97,106 +114,134 @@ function Draftpage() {
   };
 
   return (
-    <div className="container">
-      <div className="search-container">
-        <div>
-          <h1>SEARCH YOUR PLAYERS</h1>
+    <div className="dark-bg draftPage">
+      <Navbar />
+      <Container className="mt-4">
+        <h1 id="searchyourplayers"> 🏀 DRAFT PAGE 🏀</h1>
+        <div className="mb-4" id="hollup">
           <input
-            className="inputsize"
+            className="input123"
             type="text"
             placeholder="Search for an NBA player"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="searchbutton1">
-            <button className="search-button" onClick={handleSearch}>
-              Search
-            </button>
+          <p>Current Time: {time}</p> {/* Display the current time from the context */}
+          <Button
+            variant="orange" // Custom CSS class for NBA color
+            onClick={handleSearch}
+            className="ml-2 btn-orange"
+          >
+            Search
+          </Button>
+          <div className="mock-draft-button">
+            {!isMockDrafting ? (
+              <Button
+                variant="success"
+                onClick={startMockDraft}
+                className="btn-start-draft"
+                id="startdraftbtn"
+              >
+                START MOCK DRAFT
+              </Button>
+            ) : (
+              <div>
+                <p>Time Remaining: {timer} seconds</p>
+                <p>Mock Draft in progress...</p>
+                <Button
+                  variant="danger"
+                  onClick={endTurn}
+                  className="btn-end-turn"
+                >
+                  End Turn
+                </Button>
+              </div>
+            )}
           </div>
         </div>
-        <div className="results">
-          {NbaSearch.map((player) => (
-            <div key={player.id} className="player-card">
-              <div className="player-info">
-                <h3>
-                  {player.first_name} {player.last_name}
-                </h3>
-                <button onClick={() => addToMyTeam(player)}>Add to My Team</button>
-              </div>
-              <div className="player-stats">
-                <p>Team: {player.team.full_name}</p>
-                <p>Position: {player.position}</p>
-                <p>Weight: {player.weight_pounds}</p>
-                <p>
-                  Height: {player.height_feet},{player.height_inches}
-                </p>
-                {playerStats && playerStats.player_id === player.id && (
-                  <div>
-                    <h4>Player Stats</h4>
-                    {/* Display stats chart using PlayerStatsChart */}
+        <Row>
+          <Col md={6}>
+            <div className="results">
+              {NbaSearch.map((player) => (
+                <Card key={player.id} className="mb-3">
+                  <Card.Body>
+                    <div className="nbacardname">
+                      <h5>
+                        {player.first_name} {player.last_name}
+                      </h5>
+                    </div>
+                    <div className="nbacardname">
+                      <p>Team: {player.team.full_name}</p>
+                    </div>
+                    <Button
+                      variant="orange" // Custom CSS class for NBA color
+                      onClick={() => addToMyTeam(player)}
+                      className="btn-add-to-team"
+                    >
+                      Add to My Team
+                    </Button>
                     <PlayerStatsChart playerStats={playerStats} />
-                  </div>
-                )}
-              </div>
+                    {playerStats && playerStats.player_id === player.id && (
+                      <div>
+                        <h4>Player Stats</h4>
+                        {/* Display stats chart using PlayerStatsChart */}
+                      </div>
+                    )}
+                  </Card.Body>
+                </Card>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mock-draft-button">
-        {!isMockDrafting ? (
-          <button onClick={startMockDraft}>START MOCK DRAFT</button>
-        ) : (
-          <div>
-            <p>Time Remaining: {timer} seconds</p>
-            <p>Mock Draft in progress...</p>
-            <button onClick={endTurn}>End Turn</button>
-          </div>
-        )}
-      </div>
-
-      <div className="my-teams">
-        <div className="my-team">
-          <h2>My Team 1</h2>
-          {myTeam1.map((player) => (
-            <div key={player.id} className="player-card">
-              <div className="player-info">
-                <h3>
-                  {player.first_name} {player.last_name}
-                </h3>
-              </div>
-              <div className="player-stats">
-                <p>Team: {player.team.full_name}</p>
-                <p>Position: {player.position}</p>
-                <p>Weight: {player.weight_pounds}</p>
-                <p>
-                  Height: {player.height_feet},{player.height_inches}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="my-team">
-          <h2>My Team 2</h2>
-          {myTeam2.map((player) => (
-            <div key={player.id} className="player-card">
-              <div className="player-info">
-                <h3>
-                  {player.first_name} {player.last_name}
-                </h3>
-              </div>
-              <div className="player-stats">
-                <p>Team: {player.team.full_name}</p>
-                <p>Position: {player.position}</p>
-                <p>Weight: {player.weight_pounds}</p>
-                <p>
-                  Height: {player.height_feet},{player.height_inches}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+          </Col>
+          <Col md={6}>
+            <Row>
+              <Col>
+                <div className="my-team">
+                  <h2 style={{color:"black"}}>Team 1</h2>
+                  {myTeam1.map((player, index) => (
+                    <Card key={index} className="mb-3">
+                      <Card.Body>
+                        {player ? (
+                          <>
+                            <h5 className="nbacardname">
+                              {player.first_name} {player.last_name}
+                            </h5>
+                            <p className="nbacardname">
+                              Position: {player.position}
+                            </p>
+                          </>
+                        ) : (
+                          "Empty Slot"
+                        )}
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              </Col>
+              <Col>
+                <div className="my-team">
+                  <h2 style={{color:"black"}}>Team 2</h2>
+                  {myTeam2.map((player, index) => (
+                    <Card key={index} className="mb-3">
+                      <Card.Body>
+                        {player ? (
+                          <>
+                            <h5>
+                              {player.first_name} {player.last_name}
+                            </h5>
+                            <p>Position: {player.position}</p>
+                          </>
+                        ) : (
+                          "Empty Slot"
+                        )}
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

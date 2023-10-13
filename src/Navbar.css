@@ -1,0 +1,22 @@
+#NARBARBRO{
+    background: #C9082A;
+   border: 2px solid black;
+   
+}
+
+.navbarwords{
+    color: white;
+}
+.navlinks{
+    color: white;
+}
+#searchyourplayers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hollup{
+    background: pink;
+    border: 2px solid black;
+}

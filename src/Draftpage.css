@@ -1,0 +1,102 @@
+/* Draftpage.css */
+
+/* Dark gray background for the entire page */
+body {
+    background-color: #ffffff;
+    color: rgb(14, 14, 14);
+    padding: 20px;
+    /* background-image: url('https://media0.giphy.com/media/VGhhoIgysgMiAHcA88/giphy.gif'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .nbalogo{
+    width: 50px;
+    height: 40px;
+  }
+  /* Orange background color for buttons */
+  .btn-orange {
+    background-color: #C9082A;
+    border: none;
+    color: rgb(255, 255, 255); /* Added text color for consistency */
+  }
+  
+  /* Style for the "Add to My Team" button */
+  .btn-add-to-team {
+    background-color: #C9082A;
+    color: rgb(255, 255, 255);
+    border: none;   
+  }
+  
+  /* Style for the "START MOCK DRAFT" button */
+  .mock-draft-btn {
+    background-color: #28a745; /* Green color for success */
+    color: rgb(0, 0, 0);
+    border: none;
+    float: right;
+  }
+  
+  /* Style for the "End Turn" button */
+  .btn-end-turn {
+    background-color: #dc3545; /* Red color for danger */
+    color: rgb(4, 2, 2);
+    border: none;
+  }
+  
+  /* Adjust the size of SVG elements */
+  svg {
+    width: 85%;
+  }
+  
+  .card-body{
+    background: #1d428a;
+    color: rgb(246, 246, 246);
+    border: 2px solid black;
+    margin: 0;
+    padding: 0;
+
+  }
+
+  .nbacardname{
+    display: flex;
+    justify-content: center;
+  }
+  .mt-4 container{
+    border: 2px solid black;
+  }
+  .input123{
+    height: 35px;
+    width: 500px;
+    margin-left: 400px;
+    margin-top: 30px;
+    margin-right: 6px;
+  }
+  .my-team{
+    border: 2px solid black;
+  }
+
+  #homepagetitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  #articleheader{
+    color: white;
+  
+  }
+  
+  .info-container{
+    background-color: rgb(255, 255, 255);
+    margin: 2px;
+    padding: 2px;
+    border: 2px rgb(255, 255, 255);
+  }
+  .games-bar{
+    background-color: rgb(221, 219, 219);
+  }
+
+  #articleheader{
+    color: black;
+  }
+  

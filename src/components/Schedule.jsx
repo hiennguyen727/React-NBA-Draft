@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../NBAGamesBar.css';
+import '../NbaGamesBar.css';
 
 class NBAGamesBar extends Component {
   constructor() {

@@ -44,6 +44,7 @@ function App() {
     <Routes>
      
       <Route path="/" element={<Homepage />} />
+      <Route path="*" element={<Homepage />} />
       <Route path="/draftpage" element={<Draftpage />} />
       <Route path="/teams" element={<Teams />} />
       <Route path="/aboutme" element={<Aboutus />} />
